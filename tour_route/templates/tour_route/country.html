@@ -1,0 +1,47 @@
+{% extends 'tour_route/base.html' %}
+{% block title %}
+    {{ country.name }}
+{% endblock %}
+{{% block content %}
+<br>
+{% if country.image %}
+    <div class="text-center">
+        <img class="rounded" src="{{ country.image.url }}" width="70%" height="450">
+    </div>
+{% endif %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-2">
+            </div>
+
+        <div class="col-md-8" style="background-color: white">
+            <div class="text-center">
+                <h2>{{ country.name }}</h2>
+                <p class="text-monospace">
+                    {{ country.description }}
+                </p>
+            </div>
+            <br>
+            <h4 class="text-center">Cities in {{ country.name }}</h4>
+            <div class="card-group">
+                {% for city in country.city_set.all %}
+                <a href="{% url 'city_description' pk=city.pk %}">
+                    <div class="card" style="width: 20rem;">
+                        {% if city.icon %}
+                            <img class="card-img-top" src="{{ city.icon.url }}" height="220">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-text text-center">{{ city.name }}</h5>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}

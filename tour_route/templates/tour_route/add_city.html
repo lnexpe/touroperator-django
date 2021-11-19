@@ -1,0 +1,52 @@
+{% extends 'tour_route/base.html' %}
+{% block title %}
+Choose city
+{% endblock %}
+{{% block content %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-2">
+
+<!--                <div class="text-center">-->
+<!--                <form method="get" action="">-->
+<!--                    Search country by name {{ form.search }}-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                    <input type="submit" class="btn btn-outline-primary  btn-lg" value="Filter">-->
+<!--                </form>-->
+<!--                </div>-->
+            </div>
+
+        <div class="col-md-8">
+            <div class="list-group">
+                {% for city in cities %}
+                <a href="{% url 'add_hotel' step=step city=city.pk %}" class="list-group-item list-group-item-action">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm text-center">
+                                {% if city.icon %}
+                                    <img src="{{ city.icon.url }}" width="140" height="100">
+                                {% endif %}
+                            </div>
+                            <div class="col-sm text-center">
+                                <h3 class="text-center">{{ city.name }}</h3>
+                            </div>
+                            <div class="col-sm">
+                                <p class="text-justify" style="height:40px;line-height:20px;overflow:hidden;">
+                                    {{ city.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'tour_route/base.html' %}
+{% block title %}
+    {{ hotel.name }}
+{% endblock %}
+{{% block content %}
+<br>
+{% if place.image %}
+    <div class="text-center">
+        <img src="{{ place.image.url }}" width="70%" height="50%">
+    </div>
+{% endif %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-2">
+            </div>
+
+        <div class="col-md-8" style="background-color: white">
+            <div class="text-center">
+                <h2>{{ place.name }}</h2>
+                <p class="text-monospace">
+                    {% if place.description %}
+                        {{ place.description }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}

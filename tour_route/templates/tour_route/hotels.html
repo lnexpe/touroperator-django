@@ -1,0 +1,88 @@
+{% extends 'tour_route/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    {{ hotel.name }}
+{% endblock %}
+{{% block content %}
+
+<!--<form method="get" action="">-->
+<!--    {{ form }}-->
+<!--    <input type="submit">-->
+<!--</form>-->
+<br>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-2">
+
+                <div class="text-center">
+                <form method="get" action="">
+                    {{ form|crispy }}
+                    <br>
+                    <input type="submit" class="btn btn-outline-primary  btn-lg" value="Filter">
+                </form>
+                </div>
+                <br>
+            </div>
+
+        <div class="col-md-8">
+            <div class="list-group">
+                {% for hotel in hotels %}
+                <a href="{% url 'hotel_description' pk=hotel.pk %}" class="list-group-item list-group-item-action">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm text-center">
+                                {% if hotel.icon %}
+                                    <img src="{{ hotel.icon.url }}" width="140" height="100">
+                                {% endif %}
+                            </div>
+                            <div class="col-sm text-center">
+                                <h3 class="text-center">{{ hotel.name }}</h3>
+                            </div>
+                            <div class="col-sm text-center">
+                                <h4>{{ hotel.city.country.name }}, {{ hotel.city.name }}</h4>
+                            </div>
+                            <div class="col-sm text-center">
+                                <h4 class="text-success">{{ hotel.price }} $ per person</h4>
+                            </div>
+                            <div class="col-sm">
+                                <p class="text-justify" style="height:40px;line-height:20px;overflow:hidden;">
+                                    {{ hotel.description }}
+                                </p>
+                                <p class="text-primary">
+                                    Click to read more
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <br>
+            <br>
+            <div class="text-center align-bottom">
+                {% if paginated %}
+                    {% if page_obj.has_previous %}
+                        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                 {% if page_obj.has_next %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}

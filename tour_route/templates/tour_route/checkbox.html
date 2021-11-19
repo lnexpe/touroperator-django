@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+  <div>
+    <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter">
+    <label for="subscribeNews">Subscribe to newsletter?</label>
+  </div>
+  <div>
+    <button type="submit">Subscribe</button>
+  </div>
+</form>
+</body>
+</html>

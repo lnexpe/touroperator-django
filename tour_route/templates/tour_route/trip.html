@@ -1,0 +1,79 @@
+{% extends 'tour_route/base.html' %}
+{% block title %}
+    Trip
+{% endblock %}
+{{% block content %}
+<br>
+<br>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-1">
+            </div>
+
+        <div class="col-md-10" style="background-color: white">
+            <h2 class="text-center">{{trip.name}}</h2>
+            <p class="text-center text-monospace">{{trip.start_city}}</p>
+            <div class="list-group">
+            {% for route in trip.route_set_sorted %}
+                <div class="list-group-item-action">
+                    <div class="container-fluid">
+                        <a href="{% url 'city_description' pk=route.hotel.city.pk %}" class="list-group-item list-group-item-action">
+                            <div class="row">
+                                <div class="col-sm text-center">
+                                    <h3 class="text-center">{{ route.start_date|date:'Y-m-d' }}  - {{ route.end_date|date:'Y-m-d' }}</h3>
+                                </div>
+                                <div class="col-sm text-center">
+                                    {% if route.hotel.city.country.icon %}
+                                        <img src="{{ route.hotel.city.country.icon.url }}" width="140" height="100">
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm text-center">
+                                    <h3 class="text-center">{{ route.hotel.city.country.name }}</h3>
+                                </div>
+                                <div class="col-sm text-center">
+                                    {% if route.hotel.city.icon %}
+                                        <img src="{{ route.hotel.city.icon.url }}" width="140" height="100">
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm text-center">
+                                    <h3 class="text-center">{{ route.hotel.city.name }}</h3>
+                                </div>
+                                <div class="col-sm text-center">
+                                    {% if route.hotel.icon %}
+                                        <img src="{{ route.hotel.icon.url }}" width="140" height="100">
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm text-center">
+                                    <h3 class="text-center">{{ route.hotel.name }}</h3>
+                                </div>
+                                <div class="col-sm text-center">
+                                    <h4 class="text-success">{{ route.hotel.price }} $ per person</h4>
+                                </div>
+                            </div>
+                        </a>
+                        <h4 class="text-center">Chosen places to visit in {{route.hotel.city.name}}</h4>
+                        <div class="row">
+                            {% for place in route.tripplaces_set.all %}
+                            <a href="{% url 'place_description' pk=place.place.pk %}">
+                                <div class="col-sm">
+                                    <p>{{ place.place.name }}</p>
+                                    {% if place.place.icon %}
+                                        <img class="rounded-circle" src="{{ place.place.icon.url }}" width="70" height="70">
+                                    {% endif %}
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>
+{% endblock %}

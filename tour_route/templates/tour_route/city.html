@@ -1,0 +1,71 @@
+{% extends 'tour_route/base.html' %}
+{% block title %}
+    {{ city.name }}, {{ city.country.name }}
+{% endblock %}
+{{% block content %}
+<br>
+{% if city.image %}
+    <div class="text-center">
+        <img class="rounded" src="{{ city.image.url }}" width="70%" height="450">
+    </div>
+{% endif %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+
+        <div class="col-md-8" style="background-color: white">
+            <div class="text-center">
+                <h2>{{ city.name }}, {{ city.country.name }}</h2>
+                <p class="text-monospace">
+                    {% if city.description %}
+                        {{ city.description }}
+                    {% endif %}
+                </p>
+            </div>
+            <br>
+            <h4 class="text-center">Hotels in {{ city.name }}</h4>
+            <br>
+            <div class="card-group">
+                {% for hotel in hotels %}
+                <a href="{% url 'hotel_description' pk=hotel.pk %}">
+                    <div class="card" style="width: 20rem;">
+                        {% if hotel.icon %}
+                            <img class="card-img-top" src="{{ hotel.icon.url }}" height="220">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-text text-center">{{ hotel.name }}</h5>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="text-center">
+                <a href="{% url 'all_hotels' %}?city_field={{ city.pk }}">
+                    <h3>Show all hotels in {{ city.name }}</h3>
+                </a>
+            </div>
+            <br>
+            {% if places %}
+                <h4 class="text-center">Places of interest in {{ city.name }}</h4>
+            {% endif %}
+            <div class="card-group">
+                {% for place in places %}
+                    <a href="{% url 'place_description' pk=place.pk %}">
+                        <div class="card" style="width: 20rem;">
+                            <img class="card-img-top" src="{{ place.icon.url }}" height="220">
+                            <div class="card-body">
+                                <h5 class="card-text text-center">{{ place.name }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}

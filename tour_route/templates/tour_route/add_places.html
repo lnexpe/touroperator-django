@@ -1,0 +1,63 @@
+{% extends 'tour_route/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    {{ hotel.name }}
+{% endblock %}
+{{% block content %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+
+        <div class="col-md-8">
+            <form method="post">
+                {% csrf_token %}
+                Date format: D/M/Y
+                {{ form_dates|crispy }}
+                {% if step == 1 %}
+                    {{ form_info|crispy }}
+                {% endif %}
+                <div class="list-group checkbox-list-group">
+                    {% for place in places %}
+                            <div class="list-group-item">
+                                <label>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <input type="checkbox" name="chosen" value="{{ place.pk }}">
+                                        </div>
+                                        <div class="col-sm">
+                                            {% if place.icon %}
+                                                <img src="{{ place.icon.url }}" width="140" height="100">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <h3 class="text-center">{{ place.name }}</h3>
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <h4 class="text-success">{{ place.price }} $ per person</h4>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p class="text-justify" style="height:40px;line-height:20px;overflow:hidden;">
+                                                {{ place.description }}
+                                            </p>
+                                            <p class="text-primary">
+                                                <a href="{% url 'place_description' pk=place.pk %}">Read more</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <div class="text-center">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Choose</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}

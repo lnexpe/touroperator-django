@@ -1,0 +1,41 @@
+{% extends 'tour_route/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Log In
+{% endblock %}
+{{% block content %}
+<div class="row">
+    <div class="col-md-3">
+    </div>
+
+    <div class="col-md-6">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4 text-center">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">
+                    Login
+                </button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <p>
+                <small class="text-muted">
+                    Need an account? <a class="ml-2" href="{% url 'register' %}">Sign in</a>
+                </small>
+            </p>
+            <p>
+                <small class="text-muted">
+                    Forgot password? <a href="{% url 'password_reset' %}">Reset</a>
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+    </div>
+</div>
+{% endblock %}

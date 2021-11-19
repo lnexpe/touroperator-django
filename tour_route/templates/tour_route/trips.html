@@ -1,0 +1,51 @@
+{% extends 'tour_route/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    {{ hotel.name }}
+{% endblock %}
+{{% block content %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-2">
+            </div>
+
+        <div class="col-md-8">
+            <div class="list-group">
+                {% for trip in trips %}
+                <a href="{% url 'trip_description' pk=trip.pk %}">
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm text-center">
+                                <p class="text-justify" style="height:40px;line-height:20px;overflow:hidden;">
+                                    {{trip.name }}
+                                </p>
+                            </div>
+                            <div class="col-sm text-center">
+                                Number of people: {{ trip.people }}
+                            </div>
+                            <div class="col-sm text-center">
+                                Start from: {{ trip.start_city }}
+                            </div>
+                            <div class="col-sm text-center">
+                                Created at: {{ trip.created_at }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <form method="post" action="{% url 'delete_trip' pk=trip.pk %}">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-end">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}
